@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'nim', 'organisasi', 'role'])]
+#[Fillable(['name', 'username', 'email', 'password', 'nim', 'organisasi', 'role'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -33,5 +33,13 @@ class User extends Authenticatable
     public function peminjaman()
     {
         return $this->hasMany(Peminjaman::class, 'id_user', 'id');
+    }
+
+    /**
+     * Apakah user ini admin TU?
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 }
